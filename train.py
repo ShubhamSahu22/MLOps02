@@ -7,8 +7,12 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 
+import dagshub
+dagshub.init(repo_owner='iquantconsult', repo_name='MLOps02', mlflow=True)
+
 # Configure MLFlow tracking URI
-mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000"))
+# mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000"))
+mlflow.set_tracking_uri("https://dagshub.com/iquantconsult/MLOps02.mlflow")
 
 # Set the MLflow experiment name
 mlflow.set_experiment("Iris Model Training")

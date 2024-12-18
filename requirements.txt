@@ -4,3 +4,4 @@ pytest
 numpy
 pylint
 mlflow
+dagshub
