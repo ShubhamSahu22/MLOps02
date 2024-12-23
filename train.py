@@ -7,13 +7,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score, precision_score, recall_score
 
-import dagshub
-dagshub.init(repo_owner='iquantconsult', repo_name='MLOps02', mlflow=True)
-
-# Configure MLFlow tracking URI
-# mlflow.set_tracking_uri(os.getenv("MLFLOW_TRACKING_URI", "http://localhost:5000"))
-mlflow.set_tracking_uri("https://dagshub.com/iquantconsult/MLOps02.mlflow")
-
 # Set the MLflow experiment name
 mlflow.set_experiment("Iris Model Training")
 
@@ -28,7 +21,7 @@ X_train, X_test, y_train, y_test = train_test_split(
 
 # Start an MLflow run to track model training experiment
 with mlflow.start_run():
-    # Log parameters
+    # Log parameters to mlflow
     n_estimators = 100
     max_depth = None
     random_state = 42
@@ -46,7 +39,7 @@ with mlflow.start_run():
     precision = precision_score(y_test, y_pred, average="weighted")
     recall = recall_score(y_test, y_pred, average="weighted")
     
-    # Log metrics
+    # Log metrics to mlflow
     mlflow.log_metric("accuracy", accuracy)
     mlflow.log_metric("precision", precision)
     mlflow.log_metric("recall", recall)
@@ -58,7 +51,7 @@ with mlflow.start_run():
     with open(model_path, "wb") as f:
         pickle.dump(model, f)
     
-    # Log the model as an artifact
+    # Log the model as an artifact to mlflow
     mlflow.log_artifact(model_path)
     print(f"Model trained and logged to MLflow successfully with accuracy: {accuracy}")
 
